@@ -1,11 +1,13 @@
 {
   "name": "aweitian/route",
-  "description": "ui element",
+  "description": "data tuple component",
   "type": "project",
   "keywords": [
-    "ui"
+    "data",
+    "tuple",
+    "component"
   ],
-  "homepage": "https://github.com/aweitian/ui",
+  "homepage": "https://github.com/aweitian/data",
   "license": "MIT",
   "authors": [
     {
@@ -23,7 +25,7 @@
   "autoload": {
     "files": [],
     "psr-4": {
-      "Tian\\Ui\\": "src/"
+      "Tian\\Data\\": "src/"
     }
   }
 }
