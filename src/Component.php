@@ -6,7 +6,7 @@
  * @Desc: 关系数据库中的分量
  * 依赖:
  */
-namespace Tian\Data;
+namespace Aw\Data;
 
 abstract class Component {
 	/**

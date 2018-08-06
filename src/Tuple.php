@@ -6,7 +6,7 @@
  * @Desc: Tuple 元组 关系表中的一行称为一个元组
  * 依赖:
  */
-namespace Tian\Data;
+namespace Aw\Data;
 
 class Tuple implements \IteratorAggregate {
 	private $children = array ();
