@@ -17,6 +17,17 @@ class Tuple implements \IteratorAggregate {
 			}
 		}
 	}
+
+
+    /**
+     * @param $index
+     * @return Component
+     */
+    public function get($index)
+    {
+        return isset($this->children[$index]) ? $this->children[$index] : null;
+    }
+
 	/**
 	 * (non-PHPdoc)
 	 *
