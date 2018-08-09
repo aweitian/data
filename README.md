@@ -28,3 +28,8 @@
 <tr><td>char</td><td>binary</td><td>varbinary</td><td></td></tr>
 </table>
 
+
+## Tuple 元组 关系表中的一行称为一个元组
+- append(Component)
+- insert(pos,Component)
+ 
