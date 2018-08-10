@@ -6,9 +6,11 @@
  * @Desc: 关系数据库中的分量
  * 依赖:
  */
+
 namespace Aw\Data;
 
-abstract class Component {
+class Component
+{
     /**
      * 字段名
      *
@@ -41,17 +43,32 @@ abstract class Component {
     public $allowNull = false;
     public $isPk = false;
     public $isAutoIncrement = false;
+
     /**
-     * 可用的KEY name,alias,dataType,domain,default,comment,isUnsiged,allowNull,isPk,isAutoIncrement
+     * 可用的KEY name,alias,dataType,domain,default,comment,isUnsigned,allowNull,isPk,isAutoIncrement
      *
      * @param array $data
      */
-    public function __construct(array $data = array()) {
-        foreach ( $data as $key => $val ) {
-            if (property_exists ( $this, $key )) {
+    public function __construct(array $data = array())
+    {
+        foreach ($data as $key => $val) {
+            if (property_exists($this, $key)) {
                 $this->{$key} = $val;
             }
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function dump()
+    {
+        $ret = array();
+        $keys = "name,alias,dataType,domain,default,comment,isUnsigned,allowNull,isPk,isAutoIncrement";
+        foreach (explode(",", $keys) as $item) {
+            $ret[$item] = $this->{$item};
+        }
+        return $ret;
     }
 
 
@@ -231,14 +248,30 @@ abstract class Component {
         $this->isAutoIncrement = $isAutoIncrement;
     }
 
-	
-	/**
-	 *
-	 * @param string $value        	
-	 * @return bool
-	 */
-	abstract public function domainChk($value);
-	public static function intDomainChk($value) {
-		return is_int ( $value );
-	}
+
+    /**
+     *
+     * @param string $value
+     * @return bool
+     */
+    public function domainChk($value)
+    {
+        if (is_array($this->domain)) {
+            return in_array($value, $this->domain);
+        }
+        if ($this->isUnsigned()) {
+            return preg_match("/^\d+^/", $value);
+        }
+        if (is_int($this->domain)) {
+            if (function_exists("mb_strlen"))
+                return mb_strlen($value) <= $this->domain;
+            return strlen($value) <= $this->domain;
+        }
+        return false;
+    }
+
+    public static function intDomainChk($value)
+    {
+        return is_int($value);
+    }
 }

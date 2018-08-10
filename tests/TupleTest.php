@@ -26,7 +26,7 @@ class TupleTest extends PHPUnit_Framework_TestCase
 
         $loc = new Field();
         $loc->setName('location');
-        $t->insert(1,$loc);
+        $t->insert(1, $loc);
         $this->assertEquals('location', $t->getKeys(1));
         $this->assertEquals('age', $t->getKeys(2));
 
@@ -36,7 +36,7 @@ class TupleTest extends PHPUnit_Framework_TestCase
         $xx->setName("ff");
         $new_t->append($xx);
 
-        $new_t->prependTuple($t,false);
+        $new_t->prependTuple($t, false);
 //        var_dump($new_t->getKeys());
         $this->assertEquals('age', $new_t->getKeys(0));
         $this->assertEquals('ff', $new_t->getKeys(3));
@@ -49,6 +49,25 @@ class TupleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('name', $new_t->getKeys(0));
         $this->assertEquals('ff', $new_t->getKeys(3));
         $this->assertEquals('name', $t->getKeys(0));
+    }
+
+    public function testDump()
+    {
+        $t = new \Aw\Data\Tuple();
+        $name = new Field();
+        $name->setName('name');
+
+        $age = new Field();
+        $age->setName('age');
+
+        $t->append($age);
+        $t->prepend($name);
+
+
+        $tt = new \Aw\Data\Tuple();
+        $tt->load($t->dump(), "\\Field");
+        $this->assertTrue($tt->get("age") instanceof Field);
+        $this->assertEquals($tt->get("age")->getName(), "age");
     }
 }
 

@@ -9,6 +9,8 @@
 
 namespace Aw\Data;
 
+use Exception;
+
 class Tuple implements \IteratorAggregate
 {
     private $children = array();
@@ -22,6 +24,31 @@ class Tuple implements \IteratorAggregate
         }
     }
 
+    /**
+     * @return array
+     */
+    public function dump()
+    {
+        /**
+         * @var Component $component
+         */
+        $ret = array();
+        foreach ($this->children as $key => $component) {
+            $ret[$key] = $component->dump();
+        }
+        return $ret;
+    }
+
+    public function load($data, $component_cls = "\\Aw\\Data\\Component")
+    {
+        foreach ($data as $t) {
+            if (class_exists($component_cls)) {
+                $this->append(new $component_cls($t));
+            } else {
+                throw new Exception($component_cls . " not found");
+            }
+        }
+    }
 
     /**
      * @param $name
